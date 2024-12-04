@@ -1,8 +1,17 @@
 import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 
 class DTUAppsmithMap {
   constructor(containerId, options = {}) {
+    if (!document.getElementById('leaflet-css')) {
+      const link = document.createElement('link');
+      link.id = 'leaflet-css';
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+      link.crossOrigin = '';
+      document.head.appendChild(link);
+    }
+    
     this.map = null;
     this.markers = [];
     this.init(containerId, options);
@@ -29,5 +38,5 @@ class DTUAppsmithMap {
   // Thêm các method custom khác...
 }
 
-// Export dạng UMD/ESM
+// Đảm bảo export default
 export default DTUAppsmithMap; 

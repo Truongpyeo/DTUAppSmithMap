@@ -5,8 +5,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.umd.js',
-    library: 'DTUAppsmithMap',
-    libraryTarget: 'umd',
+    library: {
+      name: 'DTUAppsmithMap',
+      type: 'umd',
+      export: 'default'
+    },
     globalObject: 'this'
   },
   module: {
