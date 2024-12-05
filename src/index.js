@@ -128,15 +128,15 @@ class DTUAppsmithMap {
     }
 
     /**
-     * Vẽ đường đi giữa 2 điểm
+     * Vẽ đường đi theo đường phố giữa 2 điểm
      * @param {number} lat1 - Vĩ độ điểm 1
      * @param {number} lng1 - Kinh độ điểm 1
      * @param {number} lat2 - Vĩ độ điểm 2
      * @param {number} lng2 - Kinh độ điểm 2
-     * @param {Object} options - Tùy chọn cho đường (màu sắc, độ dày,...)
-     * @returns {Object} polyline - Đối tượng đường vẽ
+     * @param {Object} options - Tùy chọn cho đường
+     * @returns {Promise} Promise với đối tượng polyline
      */
-    veDuongDi(lat1, lng1, lat2, lng2, options = {}) {
+    async veDuongDi(lat1, lng1, lat2, lng2, options = {}) {
         const defaultOptions = {
             color: '#003C71',     // Màu mặc định
             weight: 3,            // Độ dày đường
@@ -145,24 +145,42 @@ class DTUAppsmithMap {
             ...options
         };
 
-        // Tạo mảng điểm cho đường
-        const latlngs = [
-            [lat1, lng1],
-            [lat2, lng2]
-        ];
+        try {
+            // Gọi OSRM API để lấy đường đi
+            const response = await fetch(
+                `https://router.project-osrm.org/route/v1/driving/${lng1},${lat1};${lng2},${lat2}?overview=full&geometries=geojson`
+            );
+            const data = await response.json();
 
-        // Vẽ đường
-        const polyline = L.polyline(latlngs, defaultOptions).addTo(this.map);
-        
-        // Thêm vào mảng quản lý
-        this.polylines.push(polyline);
+            if (data.code !== 'Ok' || !data.routes.length) {
+                throw new Error('Không thể tìm được đường đi');
+            }
 
-        // Tự động zoom để hiển thị toàn bộ đường
-        this.map.fitBounds(polyline.getBounds(), {
-            padding: [50, 50] // Thêm padding để đường không sát viền
-        });
+            // Lấy tọa độ đường đi từ response
+            const coordinates = data.routes[0].geometry.coordinates;
+            
+            // Chuyển đổi [lng, lat] sang [lat, lng] cho Leaflet
+            const latlngs = coordinates.map(coord => [coord[1], coord[0]]);
 
-        return polyline;
+            // Xóa đường cũ nếu có
+            this.xoaDuongDi();
+
+            // Vẽ đường mới
+            const polyline = L.polyline(latlngs, defaultOptions).addTo(this.map);
+            
+            // Thêm vào mảng quản lý
+            this.polylines.push(polyline);
+
+            // Tự động zoom để hiển thị toàn bộ đường
+            this.map.fitBounds(polyline.getBounds(), {
+                padding: [50, 50]
+            });
+
+            return polyline;
+        } catch (error) {
+            console.error('Lỗi khi vẽ đường:', error);
+            return null;
+        }
     }
 
     /**
@@ -170,12 +188,12 @@ class DTUAppsmithMap {
      * @param {Object} marker1 - Marker thứ nhất
      * @param {Object} marker2 - Marker thứ hai
      * @param {Object} options - Tùy chọn cho đường
-     * @returns {Object} polyline - Đối tượng đường vẽ
+     * @returns {Promise} Promise với đối tượng polyline
      */
-    veDuongDiMarker(marker1, marker2, options = {}) {
+    async veDuongDiMarker(marker1, marker2, options = {}) {
         const latlng1 = marker1.getLatLng();
         const latlng2 = marker2.getLatLng();
-        return this.veDuongDi(
+        return await this.veDuongDi(
             latlng1.lat,
             latlng1.lng,
             latlng2.lat,
