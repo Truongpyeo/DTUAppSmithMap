@@ -25,7 +25,41 @@ class DTUAppsmithMap {
         return marker;
     }
 
-    // Thêm các method custom khác...
+    /**
+     * Hiển thị địa điểm với marker và popup
+     * @param {number} lat - Vĩ độ
+     * @param {number} lng - Kinh độ 
+     * @param {string} title - Tiêu đề popup
+     * @param {string} content - Nội dung popup
+     * @param {Object} options - Tùy chọn cho marker và popup
+     * @returns {Object} marker - Đối tượng marker đã tạo
+     */
+    showLocation(lat, lng, title, content = null, options = {}) {
+        const markerOptions = options.marker || {};
+        const popupOptions = options.popup || {};
+
+        // Tạo nội dung HTML cho popup
+        const popupContent = `
+            <div class="custom-popup">
+                <h3>${title}</h3>
+                <div>${content}</div>
+            </div>
+        `;
+
+        // Tạo marker và thêm vào map
+        const marker = L.marker([lat, lng], markerOptions)
+            .addTo(this.map)
+            .bindPopup(popupContent, popupOptions)
+            .openPopup();
+
+        // Thêm vào mảng markers để quản lý
+        this.markers.push(marker);
+
+        // Di chuyển map đến vị trí marker
+        this.map.setView([lat, lng], this.map.getZoom());
+
+        return marker;
+    }
 }
 
 // Đảm bảo export default
