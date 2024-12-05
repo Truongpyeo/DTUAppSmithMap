@@ -32,16 +32,31 @@ class DTUAppsmithMap {
      * @param {string} title - Tiêu đề popup
      * @param {string} content - Nội dung popup
      * @param {Object} options - Tùy chọn cho marker và popup
+     * @param {string} iconHtml - HTML của icon (mặc định: '<i class="fa fa-map-marker-alt"></i>')
      * @returns {Object} marker - Đối tượng marker đã tạo
      */
-    viTriHienTai(lat, lng, title, content = null, options = {}) {
-        const markerOptions = options.marker || {};
+    viTriHienTai(lat, lng, title, content = "", options = {}, iconHtml = '<i class="fa fa-map-marker-alt"></i>') {
+        // Tạo custom icon sử dụng icon HTML được truyền vào
+        const customIcon = L.divIcon({
+            html: iconHtml,  // Sử dụng icon HTML được truyền vào
+            className: 'custom-marker-icon',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
+        });
+
+        // Merge custom icon với markerOptions
+        const markerOptions = {
+            ...options.marker,
+            icon: customIcon
+        };
+
         const popupOptions = {
             ...options.popup,
             className: 'custom-popup'
         };
 
-        // Tạo nội dung HTML cho popup
+        // Phần còn lại giữ nguyên
         const popupContent = `
             <div class="popup-content">
                 <h3 class="popup-title">${title}</h3>
@@ -49,7 +64,6 @@ class DTUAppsmithMap {
             </div>
         `;
 
-        // Tạo marker và thêm vào map
         const marker = L.marker([lat, lng], markerOptions)
             .addTo(this.map)
             .bindPopup(popupContent, popupOptions)
