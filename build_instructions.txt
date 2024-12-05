@@ -40,7 +40,7 @@ npm publish
 4. KIỂM TRA SAU KHI PUBLISH
 ---------------------------
 - Kiểm tra package trên npm: https://www.npmjs.com/package/dtuappsmithmap
-- Kiểm tra CDN URL: https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.1.1/dist/index.umd.js
+- Kiểm tra CDN URL: https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.1.4/dist/index.umd.js
 - Test trong Appsmith với URL mới
 
 5. TROUBLESHOOTING
