@@ -32,17 +32,18 @@ class DTUAppsmithMap {
      * @param {string} title - Tiêu đề popup
      * @param {string} content - Nội dung popup
      * @param {Object} options - Tùy chọn cho marker và popup
-     * @param {string} iconHtml - HTML của icon (mặc định: '<i class="fa fa-map-marker-alt"></i>')
+     * @param {string} iconClass - Font Awesome class (mặc định: 'fa-map-marker-alt')
+     * @param {string} iconColor - Màu của icon (mặc định: '#003C71')
      * @returns {Object} marker - Đối tượng marker đã tạo
      */
-    viTriHienTai(lat, lng, title, content = "", options = {}, iconHtml = '<i class="fa fa-map-marker-alt"></i>') {
-        // Tạo custom icon sử dụng icon HTML được truyền vào
+    viTriHienTai(lat, lng, title, content = "", options = {}, iconClass = 'fa-map-marker-alt', iconColor = '#003C71') {
+        // Tạo custom icon với style inline
         const customIcon = L.divIcon({
-            html: iconHtml,  // Sử dụng icon HTML được truyền vào
+            html: `<i class="fa ${iconClass}" style="color: ${iconColor}; font-size: 40px;"></i>`,
             className: 'custom-marker-icon',
-            iconSize: [30, 30],
-            iconAnchor: [15, 30],
-            popupAnchor: [0, -30]
+            iconSize: [40, 40],
+            iconAnchor: [20, 40],
+            popupAnchor: [0, -40]
         });
 
         // Merge custom icon với markerOptions
