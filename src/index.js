@@ -7,58 +7,32 @@ class DTUAppsmithMap {
         this.init(containerId, options);
     }
 
-    init(containerId, options) {
-        // Khởi tạo map
-        this.map = L.map(containerId, options);
+    async init(containerId, options) {
+        // Xử lý center mặc định
+        if (!options.center || options.center.length === 0) {
+            try {
+                const position = await this.getCurrentPosition();
+                options.center = [position.lat, position.lng];
+            } catch (error) {
+                console.error('Không thể lấy vị trí hiện tại:', error);
+                options.center = [16.0544, 108.2022]; // Vị trí mặc định nếu không lấy được GPS
+            }
+        }
 
-        // Thêm tile layer mặc định
+        // Đảm bảo có zoom mặc định
+        if (!options.zoom) {
+            options.zoom = 13;
+        }
+
+        // Khởi tạo map với options đã xử lý
+        this.map = L.map(containerId, options);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
+            attribution: '© OpenStreetMap DTUDZ'
         }).addTo(this.map);
     }
-    // Custom methods
-    addMarker(lat, lng, options = {}) {
-        const marker = L.marker([lat, lng], options);
-        marker.addTo(this.map);
-        this.markers.push(marker);
-        return marker;
-    }
 
-    // Lấy vị trí hiện tại
-    getCurrentLocation() {
-        return new Promise((resolve, reject) => {
-            if (!navigator.geolocation) {
-                reject(new Error('Geolocation is not supported by your browser'));
-                return;
-            }
-
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const lat = position.coords.latitude;
-                    const lng = position.coords.longitude;
-                    
-                    // Di chuyển map đến vị trí hiện tại
-                    this.map.setView([lat, lng], 15);
-                    
-                    // Thêm marker tại vị trí hiện tại
-                    const marker = this.addMarker(lat, lng, {
-                        title: 'Vị trí của bạn'
-                    });
-                    
-                    // Mở popup
-                    marker.bindPopup('Bạn đang ở đây!').openPopup();
-                    
-                    resolve({lat, lng});
-                },
-                (error) => {
-                    reject(error);
-                }
-            );
-        });
-    }
-
-    // Static method để lấy vị trí mà không cần khởi tạo map
-    static getLocation() {
+    // Hàm private để lấy vị trí hiện tại
+    getCurrentPosition() {
         return new Promise((resolve, reject) => {
             if (!navigator.geolocation) {
                 reject(new Error('Trình duyệt không hỗ trợ Geolocation'));
@@ -69,25 +43,11 @@ class DTUAppsmithMap {
                 (position) => {
                     resolve({
                         lat: position.coords.latitude,
-                        lng: position.coords.longitude,
-                        accuracy: position.coords.accuracy,
-                        timestamp: position.timestamp
+                        lng: position.coords.longitude
                     });
                 },
                 (error) => {
-                    let errorMessage = 'Lỗi không xác định';
-                    switch(error.code) {
-                        case error.PERMISSION_DENIED:
-                            errorMessage = 'Người dùng từ chối cấp quyền vị trí';
-                            break;
-                        case error.POSITION_UNAVAILABLE:
-                            errorMessage = 'Không thể lấy được vị trí';
-                            break;
-                        case error.TIMEOUT:
-                            errorMessage = 'Hết thời gian chờ lấy vị trí';
-                            break;
-                    }
-                    reject(new Error(errorMessage));
+                    reject(error);
                 },
                 {
                     enableHighAccuracy: true,
@@ -96,6 +56,14 @@ class DTUAppsmithMap {
                 }
             );
         });
+    }
+
+    // Custom methods
+    addMarker(lat, lng, options = {}) {
+        const marker = L.marker([lat, lng], options);
+        marker.addTo(this.map);
+        this.markers.push(marker);
+        return marker;
     }
 }
 
