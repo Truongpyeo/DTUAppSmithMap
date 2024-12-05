@@ -55,5 +55,3 @@ npm publish
 - Đảm bảo đã test kỹ trước khi push
 - Cập nhật README.md với version mới
 - Giữ changelog để track các thay đổi
-
-=== KẾT THÚC HƯỚNG DẪN === 
