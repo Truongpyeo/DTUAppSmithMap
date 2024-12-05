@@ -218,7 +218,7 @@ class DTUAppsmithMap {
      * @param {number} lng - Kinh độ
      * @param {string} title - Tiêu đề (mặc định: "Vị trí hiện tại")
      * @param {string} content - Nội dung mô tả
-     * @returns {Object} marker - Marker vị trí hiện tại
+     * @returns {Object} marker - Marker v�� trí hiện tại
      */
     capNhatViTriHienTai(lat, lng, title = "Vị trí hiện tại", content = "Current location") {
         // Xóa marker vị trí hiện tại cũ nếu có
@@ -285,6 +285,74 @@ class DTUAppsmithMap {
                 };
             })
             .sort((a, b) => a.distance - b.distance); // Sắp xếp theo khoảng cách tăng dần
+    }
+
+    /**
+     * Vẽ vùng tròn với gradient
+     * @param {number} lat - Vĩ độ tâm
+     * @param {number} lng - Kinh độ tâm
+     * @param {number} radius - Bán kính vòng tròn (mét)
+     * @param {string} color - Màu chính của vòng tròn (mặc định: '#003C71')
+     * @param {Object} options - Tùy chọn thêm
+     * @returns {Object} circle - Đối tượng vòng tròn
+     */
+    veVungTron(lat, lng, radius = 1000, color = '#003C71', options = {}) {
+        // Xử lý màu cho gradient
+        const rgbaColor = (hexColor, opacity) => {
+            const hex = hexColor.replace('#', '');
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+        };
+
+        const defaultOptions = {
+            stroke: true,
+            color: color,          // Màu viền
+            weight: 2,            // Độ dày viền
+            opacity: 1,           // Độ đậm viền
+            fillColor: color,     // Màu nền
+            fillOpacity: 0.2,     // Độ trong suốt nền
+            ...options
+        };
+
+        // Tạo gradient radial cho fill
+        const circle = L.circle([lat, lng], {
+            radius: radius,
+            ...defaultOptions,
+            gradient: true,
+            fillGradient: {
+                radial: true,
+                colors: [
+                    { offset: 0, color: rgbaColor(color, 0.1) },    // Tâm trong suốt hơn
+                    { offset: 0.5, color: rgbaColor(color, 0.2) },  // Giữa
+                    { offset: 1, color: rgbaColor(color, 0.3) }     // Viền đậm hơn
+                ]
+            }
+        }).addTo(this.map);
+
+        // Thêm vào mảng quản lý nếu cần
+        if (!this.circles) this.circles = [];
+        this.circles.push(circle);
+
+        // Tự động zoom đến vùng tròn
+        this.map.fitBounds(circle.getBounds(), {
+            padding: [50, 50]
+        });
+
+        return circle;
+    }
+
+    /**
+     * Xóa tất cả vùng tròn trên bản đồ
+     */
+    xoaVungTron() {
+        if (this.circles) {
+            this.circles.forEach(circle => {
+                circle.remove();
+            });
+            this.circles = [];
+        }
     }
 }
 
