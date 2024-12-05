@@ -5,6 +5,7 @@ class DTUAppsmithMap {
         this.map = null;
         this.markers = [];
         this.polylines = [];
+        this.currentLocation = null;
         this.init(containerId, options);
     }
 
@@ -191,6 +192,81 @@ class DTUAppsmithMap {
             polyline.remove();
         });
         this.polylines = [];
+    }
+
+    /**
+     * Cập nhật vị trí hiện tại
+     * @param {number} lat - Vĩ độ
+     * @param {number} lng - Kinh độ
+     * @param {string} title - Tiêu đề (mặc định: "Vị trí hiện tại")
+     * @param {string} content - Nội dung mô tả
+     * @returns {Object} marker - Marker vị trí hiện tại
+     */
+    capNhatViTriHienTai(lat, lng, title = "Vị trí hiện tại", content = "Current location") {
+        // Xóa marker vị trí hiện tại cũ nếu có
+        if (this.currentLocation) {
+            this.currentLocation.remove();
+            this.markers = this.markers.filter(m => m !== this.currentLocation);
+        }
+
+        // Tạo marker mới cho vị trí hiện tại
+        this.currentLocation = this.taoDiaDiem(
+            lat, 
+            lng, 
+            title, 
+            content,
+            'fa-solid fa-location-dot"', // Icon khác để phân biệt
+            '#FF0000'          // Màu đỏ cho vị trí hiện tại
+        );
+
+        return this.currentLocation;
+    }
+
+    /**
+     * Tính khoảng cách từ vị trí hiện tại đến một điểm
+     * @param {number} lat - Vĩ độ điểm đích
+     * @param {number} lng - Kinh độ điểm đích
+     * @returns {number|null} Khoảng cách (km) hoặc null nếu chưa có vị trí hiện tại
+     */
+    tinhKhoangCachDenDiem(lat, lng) {
+        if (!this.currentLocation) {
+            console.warn('Chưa có vị trí hiện tại');
+            return null;
+        }
+
+        const currentLatLng = this.currentLocation.getLatLng();
+        return this.tinhKhoangCach(
+            currentLatLng.lat,
+            currentLatLng.lng,
+            lat,
+            lng
+        );
+    }
+
+    /**
+     * Tính khoảng cách từ vị trí hiện tại đến tất cả các marker
+     * @returns {Array} Mảng các khoảng cách đến từng marker
+     */
+    tinhKhoangCachDenCacDiem() {
+        if (!this.currentLocation) {
+            console.warn('Chưa có vị trí hiện tại');
+            return [];
+        }
+
+        return this.markers
+            .filter(marker => marker !== this.currentLocation) // Loại bỏ marker vị trí hiện tại
+            .map(marker => {
+                const latLng = marker.getLatLng();
+                const distance = this.tinhKhoangCachDenDiem(latLng.lat, latLng.lng);
+                const title = marker.getPopup()?.getContent()?.match(/<h3[^>]*>(.*?)<\/h3>/)?.[1] || 'Không có tiêu đề';
+                
+                return {
+                    marker: marker,
+                    title: title,
+                    distance: distance
+                };
+            })
+            .sort((a, b) => a.distance - b.distance); // Sắp xếp theo khoảng cách tăng dần
     }
 }
 
