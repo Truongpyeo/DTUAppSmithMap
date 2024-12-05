@@ -39,7 +39,7 @@ class DTUAppsmithMap {
     viTriHienTai(lat, lng, title, content = "", options = {}, iconClass = 'fa-map-marker-alt', iconColor = '#003C71') {
         // Tạo custom icon với style inline
         const customIcon = L.divIcon({
-            html: `<i class="fa ${iconClass}" style="color: ${iconColor}; font-size: 40px;"></i>`,
+            html: `<i class="${iconClass}" style="color: ${iconColor}; font-size: 40px;"></i>`,
             className: 'custom-marker-icon',
             iconSize: [40, 40],
             iconAnchor: [20, 40],
