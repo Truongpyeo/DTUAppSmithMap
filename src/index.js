@@ -16,7 +16,6 @@ class DTUAppsmithMap {
             attribution: '© OpenStreetMap contributors'
         }).addTo(this.map);
     }
-
     // Custom methods
     addMarker(lat, lng, options = {}) {
         const marker = L.marker([lat, lng], options);
@@ -53,6 +52,47 @@ class DTUAppsmithMap {
                 },
                 (error) => {
                     reject(error);
+                }
+            );
+        });
+    }
+
+    // Static method để lấy vị trí mà không cần khởi tạo map
+    static getLocation() {
+        return new Promise((resolve, reject) => {
+            if (!navigator.geolocation) {
+                reject(new Error('Trình duyệt không hỗ trợ Geolocation'));
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    resolve({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                        accuracy: position.coords.accuracy,
+                        timestamp: position.timestamp
+                    });
+                },
+                (error) => {
+                    let errorMessage = 'Lỗi không xác định';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage = 'Người dùng từ chối cấp quyền vị trí';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage = 'Không thể lấy được vị trí';
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage = 'Hết thời gian chờ lấy vị trí';
+                            break;
+                    }
+                    reject(new Error(errorMessage));
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
                 }
             );
         });
