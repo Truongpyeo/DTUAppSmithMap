@@ -72,7 +72,7 @@ class DTUAppsmithMap {
 
     // Giữ lại viTriHienTai nhưng sử dụng addMarker
     viTriHienTai(lat, lng, title, content = "", iconClass = 'fa-map-marker-alt', iconColor = '#003C71', options = {}) {
-        const marker = this.addMarker(lat, lng, title, content, iconClass, iconColor, options);
+        const marker = this.taoDiaDiem(lat, lng, title, content, iconClass, iconColor, options);
         this.map.setView([lat, lng], this.map.getZoom());
         return marker;
     }
