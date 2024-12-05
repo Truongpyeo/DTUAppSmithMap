@@ -215,7 +215,7 @@ class DTUAppsmithMap {
             lng, 
             title, 
             content,
-            'fa-solid fa-location-dot"', // Icon khác để phân biệt
+            'fa-solid fa-location-dot', // Icon khác để phân biệt
             '#FF0000'          // Màu đỏ cho vị trí hiện tại
         );
 
