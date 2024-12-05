@@ -23,7 +23,7 @@ DTUAppSmithMap/
 ------------------------
 # Add và commit changes
 git add .
-git commit -m "Remove CSS import and add dynamic CSS loading"
+git commit -m "xx"
 
 # Tăng version
 npm version patch --force

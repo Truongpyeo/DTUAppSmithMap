@@ -34,7 +34,7 @@ class DTUAppsmithMap {
      * @param {Object} options - Tùy chọn cho marker và popup
      * @returns {Object} marker - Đối tượng marker đã tạo
      */
-    showLocation(lat, lng, title, content = null, options = {}) {
+    viTriHienTai(lat, lng, title, content = null, options = {}) {
         const markerOptions = options.marker || {};
         const popupOptions = options.popup || {};
 
@@ -57,7 +57,6 @@ class DTUAppsmithMap {
 
         // Di chuyển map đến vị trí marker
         this.map.setView([lat, lng], this.map.getZoom());
-
         return marker;
     }
 }
