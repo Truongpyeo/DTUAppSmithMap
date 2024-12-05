@@ -16,13 +16,13 @@ npm install dtuappsmithmap
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.13/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.14/dist/index.umd.js"></script>
 ```
 
 ### Appsmith
 Thêm URL sau vào Resource của Appsmith:
 ```
-https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.13/dist/index.umd.js
+https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.14/dist/index.umd.js
 ```
 
 ## 🚀 Tính năng
