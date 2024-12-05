@@ -17,26 +17,18 @@ class DTUAppsmithMap {
         }).addTo(this.map);
     }
 
-    // Custom methods
-    addMarker(lat, lng, options = {}) {
-        const marker = L.marker([lat, lng], options);
-        marker.addTo(this.map);
-        this.markers.push(marker);
-        return marker;
-    }
-
     /**
-     * Hiển thị địa điểm với marker và popup
+     * Thêm marker với popup tùy chỉnh
      * @param {number} lat - Vĩ độ
      * @param {number} lng - Kinh độ 
      * @param {string} title - Tiêu đề popup
      * @param {string} content - Nội dung popup
-     * @param {Object} options - Tùy chọn cho marker và popup
      * @param {string} iconClass - Font Awesome class (mặc định: 'fa-map-marker-alt')
      * @param {string} iconColor - Màu của icon (mặc định: '#003C71')
+     * @param {Object} options - Tùy chọn cho marker và popup
      * @returns {Object} marker - Đối tượng marker đã tạo
      */
-    viTriHienTai(lat, lng, title, content = "", iconClass = 'fa-map-marker-alt', iconColor = '#003C71', options = {}) {
+    taoDiaDiem(lat, lng, title = "", content = "", iconClass = 'fa-map-marker-alt', iconColor = '#003C71', options = {}) {
         const customIcon = L.divIcon({
             html: `
                 <span class="fa-stack fa-lg" style="font-size: 20px;">
@@ -75,6 +67,12 @@ class DTUAppsmithMap {
             .openPopup();
 
         this.markers.push(marker);
+        return marker;
+    }
+
+    // Giữ lại viTriHienTai nhưng sử dụng addMarker
+    viTriHienTai(lat, lng, title, content = "", iconClass = 'fa-map-marker-alt', iconColor = '#003C71', options = {}) {
+        const marker = this.addMarker(lat, lng, title, content, iconClass, iconColor, options);
         this.map.setView([lat, lng], this.map.getZoom());
         return marker;
     }
