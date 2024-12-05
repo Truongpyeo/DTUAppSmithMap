@@ -36,13 +36,16 @@ class DTUAppsmithMap {
      */
     viTriHienTai(lat, lng, title, content = null, options = {}) {
         const markerOptions = options.marker || {};
-        const popupOptions = options.popup || {};
+        const popupOptions = {
+            ...options.popup,
+            className: 'custom-popup'
+        };
 
         // Tạo nội dung HTML cho popup
         const popupContent = `
-            <div class="custom-popup">
-                <h3>${title}</h3>
-                <div>${content}</div>
+            <div class="popup-content">
+                <h3 class="popup-title">${title}</h3>
+                <div class="popup-body">${content}</div>
             </div>
         `;
 
@@ -52,10 +55,7 @@ class DTUAppsmithMap {
             .bindPopup(popupContent, popupOptions)
             .openPopup();
 
-        // Thêm vào mảng markers để quản lý
         this.markers.push(marker);
-
-        // Di chuyển map đến vị trí marker
         this.map.setView([lat, lng], this.map.getZoom());
         return marker;
     }
