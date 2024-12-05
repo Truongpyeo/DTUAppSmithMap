@@ -40,7 +40,7 @@ class DTUAppsmithMap {
         const customIcon = L.divIcon({
             html: `
                 <span class="fa-stack fa-lg" style="font-size: 20px;">
-                    <i class="fa-regular fa-circle fa-stack-2x" style="color: ${iconColor}; opacity: 0.2;"></i>
+                    <i class="fa-regular fa-circle fa-stack-2x" style="color: ${iconColor}; opacity: 0.8;"></i>
                     <i class="${iconClass} fa-stack-1x" style="color: ${iconColor};"></i>
                 </span>
             `,
