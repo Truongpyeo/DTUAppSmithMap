@@ -147,6 +147,26 @@ map.veVungTron(
 - `veVungTron(lat, lng, radius, color, options)`: Vẽ vùng tròn với gradient
 - `xoaVungTron()`: Xóa tất cả vùng tròn
 
+### Tìm kiếm
+- `timKiemDiaChi(address)`: Tìm kiếm địa điểm và trả về tọa độ
+javascript
+// Tìm kiếm địa chỉ
+const coords = await map.timKiemDiaChi("254 Nguyễn Văn Linh");
+// Kết quả: {lat: 16.0544, lng: 108.2022}
+```
+
+- `timVaDanhDau(address, options)`: Tìm kiếm và đánh dấu địa điểm trên bản đồ
+```javascript
+// Tìm và đánh dấu địa điểm
+const marker = await map.timVaDanhDau(
+    "Đại học Duy Tân",
+    {
+        iconClass: 'fa-university',
+        iconColor: '#003C71'
+    }
+);
+```
+```
 ## 🎨 Tùy chỉnh Style
 
 ### Custom Marker Icon
@@ -194,3 +214,8 @@ const circleOptions = {
 ## 👥 Tác giả
 
 DTU DZ Team - Đại học Duy Tân
+
+## Các Hàm Mới
+
+### getLocationInfo(locationId)
+Trả về thông tin chi tiết về một địa điểm dựa trên ID.
