@@ -218,7 +218,7 @@ class DTUAppsmithMap {
      * @param {number} lng - Kinh độ
      * @param {string} title - Tiêu đề (mặc định: "Vị trí hiện tại")
      * @param {string} content - Nội dung mô tả
-     * @returns {Object} marker - Marker v�� trí hiện tại
+     * @returns {Object} marker - Marker vị trí hiện tại
      */
     capNhatViTriHienTai(lat, lng, title = "Vị trí hiện tại", content = "Current location") {
         // Xóa marker vị trí hiện tại cũ nếu có
@@ -248,7 +248,7 @@ class DTUAppsmithMap {
      */
     tinhKhoangCachDenDiem(lat, lng) {
         if (!this.currentLocation) {
-            console.warn('Chưa có vị trí hiện tại');
+            console.warn('Chưa có vị trí hiện t���i');
             return null;
         }
 
@@ -353,6 +353,63 @@ class DTUAppsmithMap {
             });
             this.circles = [];
         }
+    }
+
+    /**
+     * Tìm kiếm địa điểm và trả về tọa độ
+     * @param {string} address - Địa chỉ cần tìm
+     * @returns {Promise<{lat: number, lng: number} | null>} Tọa độ của địa điểm
+     */
+    async timKiemDiaChi(address) {
+        try {
+            const response = await fetch(
+                `https://nominatim.openstreetmap.org/search?` + 
+                `q=${encodeURIComponent(address)}&format=json&addressdetails=1`
+            );
+            
+            const data = await response.json();
+            
+            if (data && data.length > 0) {
+                return {
+                    lat: parseFloat(data[0].lat),
+                    lng: parseFloat(data[0].lon)
+                };
+            }
+            
+            return null;
+        } catch (error) {
+            console.error('Lỗi khi tìm kiếm địa chỉ:', error);
+            return null;
+        }
+    }
+
+    /**
+     * Tìm kiếm và đánh dấu địa điểm trên bản đồ
+     * @param {string} address - Địa chỉ cần tìm
+     * @param {Object} options - Tùy chọn cho marker
+     * @returns {Promise<Object|null>} Marker đ�� tạo hoặc null nếu không tìm thấy
+     */
+    async timVaDanhDau(address, options = {}) {
+        const coords = await this.timKiemDiaChi(address);
+        
+        if (coords) {
+            const marker = this.taoDiaDiem(
+                coords.lat,
+                coords.lng,
+                address,  // Sử dụng địa chỉ làm title
+                '',      // Content trống
+                options.iconClass || 'fa-map-marker-alt',
+                options.iconColor || '#003C71',
+                options
+            );
+            
+            // Di chuyển map đến vị trí tìm được
+            this.map.setView([coords.lat, coords.lng], 16);
+            
+            return marker;
+        }
+        
+        return null;
     }
 }
 
