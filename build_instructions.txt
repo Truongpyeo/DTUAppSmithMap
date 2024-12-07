@@ -26,6 +26,7 @@ git add .
 git commit -m "xx"
 
 # Tăng version
+npm version patch
 npm version patch --force
 
 # Build package
