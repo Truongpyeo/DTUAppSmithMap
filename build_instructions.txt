@@ -23,9 +23,10 @@ DTUAppSmithMap/
 ------------------------
 # Add và commit changes
 git add .
-git commit -m "Remove CSS import and add dynamic CSS loading"
+git commit -m "xx"
 
 # Tăng version
+npm version patch
 npm version patch --force
 
 # Build package
@@ -40,7 +41,7 @@ npm publish
 4. KIỂM TRA SAU KHI PUBLISH
 ---------------------------
 - Kiểm tra package trên npm: https://www.npmjs.com/package/dtuappsmithmap
-- Kiểm tra CDN URL: https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.1.4/dist/index.umd.js
+- Kiểm tra CDN URL: https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.0/dist/index.umd.js
 - Test trong Appsmith với URL mới
 
 5. TROUBLESHOOTING
@@ -55,5 +56,3 @@ npm publish
 - Đảm bảo đã test kỹ trước khi push
 - Cập nhật README.md với version mới
 - Giữ changelog để track các thay đổi
-
-=== KẾT THÚC HƯỚNG DẪN === 
