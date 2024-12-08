@@ -16,7 +16,7 @@ npm install dtuappsmithmap
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.16/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.20/dist/index.umd.js"></script>
 ```
 
 ### Appsmith Setup
