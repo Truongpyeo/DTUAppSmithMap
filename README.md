@@ -19,18 +19,15 @@ npm install dtuappsmithmap
 <script src="https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.20/dist/index.umd.js"></script>
 ```
 
-### Appsmith Setup
-1. Thêm socket.io-client vào Resources của Appsmith:
+  - AppSmith
+    - Thêm URL sau vào Resource của Appsmith:
 ```
-    https://cdn.jsdelivr.net/npm/socket.io-client@4.7.2/dist/socket.io.min.js
-```
-
-2. Thêm DTUAppsmithRealtime:
-```
-    https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.14/dist/index.esm.js
+  https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.20/dist/index.umd.js
 ```
 
-Tìm hiểu chi tiết tại [Appsmith](https://docs.appsmith.com/core-concepts/writing-code/ext-libraries#prerequisites)
+Tìm hiểu thêm về plugin tại [DTUAppSmithMap](https://www.npmjs.com/package/dtuappsmithmap)
+
+Tìm hiểu chi tiết hướng dẫn tại [Appsmith](https://docs.appsmith.com/core-concepts/writing-code/ext-libraries#prerequisites)
 
 ## 🚀 Tính năng
 
