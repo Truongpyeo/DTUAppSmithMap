@@ -1,22 +1,42 @@
-# DTUAppSmithMap
+# Mapconfig Appsmith Plugin
 
-[![npm version](https://img.shields.io/npm/v/dtuappsmithmap.svg)](https://www.npmjs.com/package/dtuappsmithmap)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## 🌟 Giới Thiệu
+ 
+ Mapconfig Appsmith Plugin là một plugin cho nền tảng AppSmith,Tích hợp và tối ưu hóa bản đồ từ các nguồn như OpenStreetMap, Google Maps, hoặc các dữ liệu bản đồ tùy chỉnh.
+ 
+ 
+ Bạn có thể xem thêm thông tin tại
+ -  GITHUB : [Mapconfig Appsmith Plugin](https://github.com/Truongpyeo/DTUAppSmithMap)
+ -  NPM : [Mapconfig Appsmith Plugin](https://www.npmjs.com/package/dtuappsmithmap)
+### 🏆 Bối Cảnh
+Plugin được phát triển như một phần của ứng dụng trong cuộc thi Mã Nguồn Mở năm 2024.
 
-Thư viện wrapper cho Leaflet, được tùy chỉnh đặc biệt cho Appsmith với các chức năng GIS của DTU.
+## ✨ Tính Năng
+- Tạo và quản lý marker với icon tùy chỉnh từ Font Awesome
+- Hiển thị popup thông tin với style DTU
+- Vẽ đường đi theo đường phố thực tế
+- Tính khoảng cách giữa các điểm
+- Vẽ vùng ảnh hưởng với gradient
+- Theo dõi vị trí hiện tại
 
 ## 📦 Cài đặt
 
 ### NPM
 
 ```bash
-npm install dtuappsmithmap
+    npm install dtuappsmithmap
 ```
 
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.16/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.20/dist/index.umd.js"></script>
+```
+
+### Appsmith
+Thêm URL sau vào Resource của Appsmith:
+```
+    https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.14/dist/index.umd.js
 ```
 
 ### Appsmith Setup
@@ -32,14 +52,7 @@ npm install dtuappsmithmap
 
 Tìm hiểu chi tiết tại [Appsmith](https://docs.appsmith.com/core-concepts/writing-code/ext-libraries#prerequisites)
 
-## 🚀 Tính năng
 
-- Tạo và quản lý marker với icon tùy chỉnh từ Font Awesome
-- Hiển thị popup thông tin với style DTU
-- Vẽ đường đi theo đường phố thực tế
-- Tính khoảng cách giữa các điểm
-- Vẽ vùng ảnh hưởng với gradient
-- Theo dõi vị trí hiện tại
 
 ## 🎯 Sử dụng
 
@@ -129,7 +142,6 @@ map.veVungTron(
     }
 );
 ```
-
 ## 📝 API Reference
 
 ### Khởi tạo
@@ -154,26 +166,6 @@ map.veVungTron(
 - `veVungTron(lat, lng, radius, color, options)`: Vẽ vùng tròn với gradient
 - `xoaVungTron()`: Xóa tất cả vùng tròn
 
-### Tìm kiếm
-- `timKiemDiaChi(address)`: Tìm kiếm địa điểm và trả về tọa độ
-javascript
-// Tìm kiếm địa chỉ
-const coords = await map.timKiemDiaChi("254 Nguyễn Văn Linh");
-// Kết quả: {lat: 16.0544, lng: 108.2022}
-```
-
-- `timVaDanhDau(address, options)`: Tìm kiếm và đánh dấu địa điểm trên bản đồ
-```javascript
-// Tìm và đánh dấu địa điểm
-const marker = await map.timVaDanhDau(
-    "Đại học Duy Tân",
-    {
-        iconClass: 'fa-university',
-        iconColor: '#003C71'
-    }
-);
-```
-```
 ## 🎨 Tùy chỉnh Style
 
 ### Custom Marker Icon
@@ -215,12 +207,8 @@ const circleOptions = {
 ```
 
 
-## Các Hàm Mới
-
-### getLocationInfo(locationId)
-Trả về thông tin chi tiết về một địa điểm dựa trên ID.
-
-
+## 📋 Yêu Cầu Tiên Quyết
+- AppSmith version mới nhất
 ## 💡Nhà phát triển
 
 - 📧 Email: thanhtruong23111999@gmail.com
@@ -235,11 +223,9 @@ Trả về thông tin chi tiết về một địa điểm dựa trên ID.
 - Nguyễn Ngọc Duy Thái  :  <u>kkdn011@gmail.com</u>
 
 ## 📚 Tài liệu
-- [Hướng dẫn cài đặt](docs/setup.md)
 - [Hướng dẫn đóng góp](/CONTRIBUTING.md)
-
 ## 🤝 Đóng góp
-Chúng tôi rất hoan nghênh mọi đóng góp! Xem [CONTRIBUTING](CONTRIBUTING.md) để biết thêm chi tiết.
+Chúng tôi rất hoan nghênh mọi đóng góp! Xem [CONTRIBUTING](/CONTRIBUTING.md) để biết thêm chi tiết.
 
 ## 🔄 Quy trình phát triển
 1. Fork repo này
@@ -256,10 +242,10 @@ Nếu bạn phát hiện lỗi, vui lòng tạo issue mới với:
 - Môi trường (browser, OS...)
 
 ## 📜 Changelog
-Xem [CHANGELOG](CHANGELOG.md) để biết lịch sử thay đổi.
+Xem [CHANGELOG](/CHANGELOG.md) để biết lịch sử thay đổi.
 
 ## ⚖️ Code of Conduct
-Xem [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) để biết các quy tắc và hành vi được chấp nhận.
+Xem [CODE_OF_CONDUCT](/CODE_OF_CONDUCT.md) để biết các quy tắc và hành vi được chấp nhận.
 
 ## Báo cáo lỗi & Góp ý
 - Issues: [GitHub Issues](https://github.com/Truongpyeo/DTURelifeLink/issues)
@@ -267,4 +253,7 @@ Xem [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) để biết các quy tắc và hành 
 
 
 ### 📝 License
-Dự án được phân phối dưới giấy phép [MIT License](LICENSE)
+Dự án được phân phối dưới giấy phép [MIT License](/LICENSE)
+
+
+*"Được phát triển với ❤️ bởi Nhóm DTU-DZ"*
