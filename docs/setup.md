@@ -222,8 +222,6 @@ const circleOptions = {
 - Võ Văn Việt           :  <u>vietvo371@gmail.com</u>
 - Nguyễn Ngọc Duy Thái  :  <u>kkdn011@gmail.com</u>
 
-## 📚 Tài liệu
-- [Hướng dẫn đóng góp](/CONTRIBUTING.md)
 ## 🤝 Đóng góp
 Chúng tôi rất hoan nghênh mọi đóng góp! Xem [CONTRIBUTING](/CONTRIBUTING.md) để biết thêm chi tiết.
 
